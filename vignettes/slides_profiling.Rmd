@@ -1,0 +1,52 @@
+---
+title: "Code Profiling"
+author: Colin Gillespie
+output: ioslides_presentation
+css: css/left.css
+---
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Slides: Code Profiling}
+%\VignetteEncoding{utf8}
+-->
+
+# Code Profiling
+## Code Profiling
+
+  * Often you will have working code, but simply want it to run faster. 
+    * In some cases it’s obvious where the bottle neck lies. 
+    * Sometimes you will guess, relying on intuition. 
+    * Sometime you're wrong
+    
+## Rprof()
+
+  * `Rprof()` is a built-in tool for profiling the execution of R expressions. 
+  * At regular time intervals, the profiler stops the R interpreter, records the current function call stack, and saves the information to a file. 
+    * Stochastic
+    * Each time we run a function R, the conditions have changed
+
+## Rprof()
+
+  * Unfortunately `Rprof()` is not user friendly
+  
+
+
+# profvis()
+## profvis()
+```{r eval=FALSE}
+library("profvis")
+profvis({
+  data(movies, package = "ggplot2movies") # Load data
+  movies = movies[movies$Comedy == 1,]
+  plot(movies$year, movies$rating)
+  model = loess(rating ~ year, data = movies) # loess regression line
+  j = order(movies$year)
+  lines(movies$year[j], model$fitted[j]) # Add line to the plot
+})
+```
+
+## Vignette
+
+```{r eval=FALSE}
+vignette("profiling", package = "efficientRSS")
+```

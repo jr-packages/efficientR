@@ -1,0 +1,90 @@
+---
+title: "Rcpp Exercises"
+author: "Colin Gillespie"
+output: rmarkdown::html_vignette
+---
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Exercises: Rcpp}
+-->
+
+> We also run on-site courses for companies and Universities.
+
+
+  
+## Overview
+
+The exercises below have been written assuming that you have never programmed in 
+C/C++ before. If you have previous experience, feel free to alter the questions to suit
+your background.
+
+## Exercise 1
+
+1. Load the `Rcpp` package 
+    ```{r, message=FALSE}
+    library("Rcpp")
+    ```
+and run the following code
+    ```{r eval=FALSE}
+    cppFunction('
+      double add_c(double x, double y){
+        double value = x + y;
+        return value;
+      }
+    ')
+```
+1. Call the function `add_c` and make sure it works. What happens if you pass it a vector
+or a character to the function?
+1. Hard: Change the function to calculate $x^y$. Hint: Google taking powers in C++.
+
+## Exercise 2
+
+1. Create a directory called `src` - this is a standard directory name for computer code.
+It's short for `source`. This is where you should keep your C++ code.
+1. Create a file called `add.cpp` and move the `add_c` function (with necessary headers)
+to the file.
+    * Compile the file and call the `add_c` function.
+1. Similar to above, but add a function called `subtract_c`.
+
+
+## Exercise 3
+
+The following R function calcaluates the variance
+
+```{r, echo=-1}
+my_mean = mean
+# Very bad sd function
+my_var = function(x) {
+  n = length(x)
+  m = my_mean(x)
+  total = 0
+  for(i in 1:n) {
+    total = total + (x[i] - m)^2
+  }
+  total/(n-1)
+}
+```
+
+Quick test
+```{r}
+set.seed(1)
+x = rnorm(10)
+my_var(x)
+var(x)
+```
+1. Write a C function that calculates the variance. 
+1. Using `microbenchmark`, compare your C version to your R function.
+    - Use the base R function `var` as a baseline.
+
+
+-----
+Hint: There's a chapter on RCpp [`Efficient R programming`](https://csgillespie.github.io/efficientR/efficient-performance.html#rcpp)
+
+
+
+
+
+
+
+
+

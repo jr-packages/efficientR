@@ -1,0 +1,55 @@
+---
+title: "Exercises: Profiling"
+author: "Colin Gillespie"
+output: rmarkdown::html_vignette
+---
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Exercises: Profiling}
+-->
+
+> Do you need statistical or software support for a grant or a proposal? 
+> [Jumping Rivers](jumpingrivers.com) can help out.
+
+The following function simulates rolling dice in a game of Monopoly. 
+```{r}
+move_square = function(current) {
+  df = data.frame(d1 = sample(seq(1, 6), 3, replace = TRUE),
+                  d2 = sample(seq(1, 6), 3, replace = TRUE))
+  
+  df$Total = apply(df, 1, sum)
+  df$IsDouble = df$d1 == df$d2
+  
+  if (df$IsDouble[1] & df$IsDouble[2] & df$IsDouble[3]) {
+    current = 11#Go To Jail
+  } else if (df$IsDouble[1] & df$IsDouble[2]) {
+    current = current + sum(df$Total[1:3])
+  } else if (df$IsDouble[1]) {
+    current = current + sum(df$Total[1:2])
+  } else {
+    current = current + df$Total[1]
+  }
+  return(current)
+}
+```
+
+In Monopoly moving around the board is complicated by the fact that rolling a double 
+(a pair of 1's, 2's, ..., 6's) is special:
+
+  * Roll two dice (total1): total_score = total1;
+  * If you get a double, roll again (total2) and total_score = total1 + total2;
+  * If you get a double, roll again (total3) and total_score = total1 + total2 + total3;
+  * If roll three is a double, Go To Jail, otherwise move total_score.
+
+The function `move_square()` captures this logic. Using `profvis()` can you pinpoint where this 
+function is slow? How would you speed it up?
+
+
+### Hints {-}
+
+  * The function runs too quickly for `profvis()`
+  * Try 
+    * wrapping the function in a loop
+    * reducing the sampling interval, `interval = 0.005`
+  * Have you tried a matrix?
+

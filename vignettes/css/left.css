@@ -1,0 +1,11 @@
+p { text-align: left; }
+
+
+/* Center and remove border */
+img {
+    border:none !important;
+    display: block;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+

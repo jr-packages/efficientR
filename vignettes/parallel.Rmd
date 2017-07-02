@@ -1,0 +1,35 @@
+---
+title: "Exercises: Parallel programming"
+author: "Colin Gillespie"
+output: rmarkdown::html_vignette
+---
+
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Exercises: Parallel programming}
+-->
+
+> Do you need an interactive dashboard? Please get in contact with [Jumping Rivers](jumpingrivers.com).
+
+
+In the **efficientR** package there is a function, `snake_ladders()`, that simulates a 
+game of snakes and ladders (for a single player):
+```{r}
+library("efficientR")
+snakes_ladders()
+```
+The return value is the number of rolls required to finish the game.
+
+1. Write a for `for` to simulate multiple games
+1. Rewrite the loop using `sapply()`
+1. Now run in parallel using `parSapply()`. Time the different versions.
+
+```{r echo=FALSE, eval=FALSE}
+library(parallel)
+cl  = makeCluster(2) 
+parSapply(cl, 1:4, snakes_ladders)
+stopCluster()
+```
+1. If you using Linux or a Mac, take a look at `mclappy()`; similar to `parSapply()`,
+but without clusters.
+

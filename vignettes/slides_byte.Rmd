@@ -1,0 +1,129 @@
+---
+title: "The byte compiler"
+author: Colin Gillespie
+output: ioslides_presentation
+css: css/left.css
+---
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Slides: The byte compiler}
+-->
+```{r echo=FALSE}
+knitr::opts_chunk$set(
+  comment = "#>",
+  collapse = TRUE,
+  cache = TRUE, 
+  fig.align="center",
+  fig.pos="t"
+)
+```
+# Byte compiler
+## Byte compiler
+
+ * The compiler package has been part of R since version 2.13.0 
+    - It translates R functions into another language that can be interpreted by a very fast interpreter
+ * Since R 2.14.0, all of the standard functions and packages in R will be pre-compiled into byte-code
+ 
+## Byte compiler: the mean() function
+
+```{r}
+getFunction("mean")
+```
+
+note the `bytecode` line
+
+## Byte compiler
+
+  * We can compile our own R functions and obtain byte code version that may run faster. 
+
+## Example: Bad mean
+
+```{r}
+mean_r = function(x) {
+  total = 0
+  n = length(x)
+  for(i in 1:n)
+    total = total + x[i]/n
+  total
+}
+```
+
+## Compiled version
+
+```{r}
+library("compiler")
+cmp_mean_r = cmpfun(mean_r)
+cmp_mean_r  
+```
+
+
+## Benchmarks
+
+```{r, eval=FALSE}
+# Generate some data
+x = rnorm(1000)
+microbenchmark::microbenchmark(times = 10, unit = "ms", # milliseconds
+          mean_r(x), cmp_mean_r(x), mean(x))
+#> Unit: milliseconds
+#>           expr   min    lq  mean median    uq  max neval cld
+#>      mean_r(x) 0.358 0.361 0.370  0.363 0.367 0.43    10   c
+#>  cmp_mean_r(x) 0.050 0.051 0.052  0.051 0.051 0.07    10  b 
+#>        mean(x) 0.005 0.005 0.008  0.007 0.008 0.03    10 a  
+```
+
+## Benchmarks
+
+```{r echo=FALSE,  warning=FALSE, fig.width=6, fig.height=4, out.width="70%", fig.align="center"}
+local(source("code/02-byte_f1.R", local=TRUE))
+```
+  
+## Compiling code
+
+There are a number of ways to complile code. 
+
+  * Compile individual functions using `cmpfun()`
+  * Enable just-in-time (JIT) compilation
+    * At the top of your R code add
+    ```{r eval=FALSE}
+    compiler::enableJIT(N)
+    ```
+  where $N$ indices the level of optimisation ($0$ to $3$)
+  
+## Monte Carlo
+
+```{r}
+f = function(N){
+  hits = 0
+  for(i in 1:N)  {
+    u1 = runif(1); u2 = runif(1)
+    if(u1^2 > u2)
+      hits = hits + 1
+  }
+  return(hits/N)
+}
+```
+__Exercise__: Time `f(N)`. Now enable `compiler::enableJIT(3)`. Retime.
+
+## Compiling code
+
+  * If you create a package, then you automatically compile the package on installation by adding
+
+    ```{r eval=FALSE}
+    ByteCompile: true
+    ```
+  to the DESCRIPTION file
+  * Most R packages installed using `install.packages()` are not compiled 
+    * We can force packages to be compiled by starting R with the environment variable `R_COMPILE_PKGS`
+    * Add `R_COMPILE_PKGS=3` to `~/.Renviron`
+
+## Compiling packages
+
+```{r eval=FALSE}
+## Windows users need Rtools
+install.packages("ggplot2", 
+                 type = "source", 
+                 INSTALL_opts = "--byte-compile") 
+```
+
+
+

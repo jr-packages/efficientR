@@ -1,0 +1,98 @@
+---
+title: "Exercises: Common issues"
+author: "Colin Gillespie"
+output: rmarkdown::html_vignette
+---
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Exercises: Common issues}
+-->
+
+> [We run](www.jumpingrivers.com) courses on R, Stan, Scala, Shiny and 
+> Python. We also provide in-house training. Get a 10% discount for courses booked
+> before Jan 1st 2017. Just mentioned "useR Efficient" in the booking notes^[The discount
+is valid with the standard academic rate; but can't be used with other discounts.].
+
+## Exercise 1
+
+In this example, we are going to investigate loading a
+large data frame. First, we'll generate a large matrix of random numbers and
+save it as a csv file:
+
+```{r practical1, echo=-2}
+N = 1e5
+N = 1e4
+m = as.data.frame(matrix(runif(N), ncol=1000))
+write.csv(m, file="example.csv", row.names=FALSE)
+```
+We can read the file the back in again using `read.csv()`
+```{r}
+dd = read.csv("example.csv")
+```
+To get a baseline result, time the `read.csv()` function call above, e.g. 
+
+```{r eval=TRUE, results="hide"}
+system.time(read.csv("example.csv"))
+```
+
+We will now look ways of speeding up this step.
+
+1. Explicitly define the classes of each column using `colClasses` in
+`read.csv()`, for example, if we have 1000 columns that all have data
+type numeric, then:
+    ```{r cache=TRUE,results='hide', tidy=FALSE}
+    read.csv(file="example.csv", colClasses = rep("numeric", 1000))
+    ```
+1.  Use the `saveRDS()` and `readRDS()` functions:
+    ```{r cache=TRUE, results="hide"}
+    saveRDS(m, file = "example.RData")
+    readRDS(file = "example.RData")
+    ```
+1. Install the __readr__ package via
+    ```{r eval=FALSE}
+    install.packages("readr")
+    ```
+Then load the package in the usual way
+    ```{r}
+    library("readr")
+    ```
+This package contains the function `read_csv()`; a replacement function for `read.csv()`. 
+Is this new function much better than the default?
+
+Which of the above give the biggest speed-ups? Are there any downsides to using these techniques? Do your results depend on the number of columns or the number of rows?
+
+
+## Exercise 2
+
+1. In this question, we'll compare matrices and data frames. Suppose we have a matrix, `d_m`
+```{r}
+##For fast computers
+#d_m = matrix(1:1000000, ncol=1000)
+##Slower computers
+d_m = matrix(1:10000, ncol=100)
+dim(d_m)
+```
+and a data frame `d_df`:
+```{r}
+d_df = as.data.frame(d_m)
+colnames(d_df) = paste0("c", 1:ncol(d_df))
+```
+
+  * Using the following code, calculate the relative differences between selecting the first column/row of a data frame and matrix. 
+    ```{r results='hide', tidy=FALSE}
+    microbenchmark::microbenchmark(times = 1000, unit = "ms", # milliseconds
+          d_m[1,], d_df[1,], d_m[,1], d_df[,1])
+    ```
+  Can you explain the result? Try varying the number of replications.
+
+  * When selecting columns in a data frame, there are a few different methods. For example, 
+    ```{r results='hide'}
+    d_df$c10
+    d_df[,10]
+    d_df[,"c10"]
+    d_df[,colnames(d_df) == "c10"]
+    ```
+    Compare these four methods.
+  * Using the `object.size()` function compare the object size of a matrix and data data frame.
+
+

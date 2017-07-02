@@ -1,0 +1,262 @@
+---
+title: "Common pitfalls"
+author: Colin Gillespie
+date: "`r Sys.Date()`"
+output: ioslides_presentation
+css: css/left.css
+---
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Slides: Common pitfalls}
+-->
+
+## Common pitfalls
+
+  * The benefit of using R is that coding time is greatly
+reduced.
+  * But it's very easy to write programs that are
+incredibly slow.
+
+![](graphics/pit.gif)
+
+# Object growth
+## Object growth: method 1
+
+__Method 1__ creates an empty vector, and grows the object:
+
+```{r eval=FALSE, echo=TRUE, tidy=FALSE}
+n = 100000
+myvec = NULL; myvec = c()
+for(i in 1:n)
+    myvec = c(myvec, i)
+```
+
+## Object growth: method 2
+
+Create an object of the final length and then changes the
+values in the object by subscripting:
+
+```{r eval=FALSE, echo=TRUE, tidy=FALSE}
+myvec = numeric(n)
+for(i in 1:n)
+    myvec[i] = i
+```
+
+## Object growth: method 3
+
+Directly creates the final object:
+```{r eval=FALSE, echo=TRUE}
+myvec = 1:n
+```
+
+
+## Object growth: timings
+
+$n$ | 1 | 2 | 3 
+----|---|---|----
+$10^5$ | 0.208  |   0.024    | 0.000 
+$10^6$ | 25.50  |   0.220    | 0.000 
+$10^7$ | 3827.0 |   2.212    | 0.000
+
+
+## Object growth: timings
+
+```{r echo=FALSE,  warning=FALSE, fig.width=6, fig.height=4, out.width="70%", fig.align="center"}
+local(source("code/01-vector_growth.R", local=TRUE))
+```
+
+## Object growth
+
+Object growth can be quite insidious since it is easy to hide growing objects in your
+code. For example:
+```{r, echo=-2}
+n = 2
+hit = NULL
+for(i in 1:n) {
+    if(runif(1) < 0.3) 
+        hit[i]  = TRUE
+    else
+        hit[i]  = FALSE
+}
+```
+__Exercise__ Rewrite the above code to avoid object growth
+
+
+
+
+## Avoid rbind too!
+
+A more common - and possibly more dangerous - problem is with `rbind`:
+```{r eval=FALSE, echo=TRUE, tidy=FALSE}
+df1 = data.frame(a = character(0), b = numeric(0))
+for(i in 1:n)
+    df1 = rbind(df1, 
+            data.frame(a = sample(letters, 1), b = runif(1)))
+```
+
+  * Probably the main reason this is more common is because it is more likely that each
+iteration will have a different number of observations.
+  * However, a reasonable upper bound on the size of the final object is often known.
+    * So pre-allocate!
+
+
+
+# Vectorise
+## Vectorise
+
+When writing code in R, you need to remember that you are using R and not C (or even F77!). For example,
+
+```{r eval=FALSE, echo=TRUE, tidy=FALSE}
+x = runif(1000) + 1
+logsum = 0
+for(i in 1:length(x))
+    logsum = logsum + log(x[i])
+```
+This is a piece R code that has a strong, unhealthy influence from C.
+
+## Vectorise
+ 
+Instead, we should write
+```{r eval=FALSE, echo=TRUE}
+logsum = sum(log(x))
+```
+
+```{r echo=FALSE}
+x = runif(2)
+```
+
+  * It's faster. When $n = 10^7$ the ``R way'' is about forty times faster.
+  * It's neater.
+  * It doesn't contain a bug when \cc{x} is of length $0$.
+
+
+## Vectorise
+
+Another common example is subsetting a vector. When writing in C, we would have something like:
+```{r tidy=FALSE}
+x = rnorm(10)
+ans = NULL
+for(i in 1:length(x)) {
+    if(x[i] < 0) 
+        ans = c(ans, x[i])
+}
+```
+
+__Exercise__: Rewrite the above code in a vectorised format
+
+<!-- ## Vectorised! -->
+
+<!-- ```{r} -->
+<!-- ans = x[x < 0] -->
+<!-- ``` -->
+
+
+
+
+## Example: Monte-Carlo integration
+
+It's also important to make full use of R functions that use vectors. For
+example, suppose we wish to estimate
+\[
+\int_0^1 x^2 dx
+\]
+using a basic Monte-Carlo method. 
+
+## Example: Monte-Carlo integration
+
+```{r echo=FALSE,  warning=FALSE, fig.width=6, fig.height=4, out.width="70%", fig.align="center"}
+local(source("code/01-monte_carlo.R", local=TRUE))
+```
+
+
+
+## Monte Carlo Integration
+
+  * Initialise: `hits = 0`
+  * __for__ `i` in `1:N`
+    * Generate two random numbers, $U_1, U_2$,  between 0 and 1
+    * If $U_2 < U_1^2$, then `hits = hits + 1`
+  * __end for__
+  * Area estimate = `hits/N`.
+
+
+
+## Example: Monte-Carlo integration
+
+```{r tidy=FALSE}
+N = 500000
+f = function(N){
+    hits = 0
+    for(i in 1:N)  {
+        u1 = runif(1); u2 = runif(1)
+        if(u1^2 > u2)
+            hits = hits + 1
+    }
+    return(hits/N)
+}
+``` 
+
+Which in R takes a few seconds:
+```{r cache=TRUE}
+system.time(f(N))
+```
+
+
+
+## Example: Monte-Carlo integration
+
+```{r tidy=FALSE}
+N = 500000
+f = function(N){
+    hits = 0
+    for(i in 1:N)  {
+        u1 = runif(1); u2 = runif(1)
+        if(u1^2 > u2)
+            hits = hits + 1
+    }
+    return(hits/N)
+}
+``` 
+
+__Exercise__: Can you vectorise the above code?
+
+<!-- ## Monte-Carlo integration -->
+
+<!-- ```{r echo=TRUE} -->
+<!-- f1 = function(N){ -->
+<!--     hits = sum(runif(N)^2 > runif(N)) -->
+<!--     return(hits/N) -->
+<!-- } -->
+<!-- ``` -->
+<!-- So using vectors we get a 100 times speed-up: -->
+<!-- ```{r} -->
+<!-- system.time(f1(N)) -->
+<!-- ``` -->
+
+
+## If you can't vectorise
+
+Put any object creation outside the loop. For example
+
+```{r cache=TRUE, tidy=FALSE}
+jitter = function(x, k) rnorm(1, x, k)
+parts = rnorm(10)
+post = numeric(length(parts))
+```
+
+```{r cache=TRUE, tidy=FALSE}
+for(i in 1:length(parts)){
+    k = 1.06*sd(parts)/length(parts)
+    post[i] = jitter(parts[i], k)
+}
+```
+
+## If you can't vectorise
+
+Can be rewritten as
+```{r cache=TRUE, tidy=FALSE}
+k = 1.06*sd(parts)/length(parts)
+for(i in 1:length(parts))
+    post[i] = jitter(parts[i], k)
+```
+

@@ -1,0 +1,17 @@
+Package: efficientR
+Type: Package
+Title: Efficient R Programming
+Version: 0.1.0
+Authors@R: c(person("Colin", "Gillespie",
+      email="csgillespie@gmail.com", role = c("aut", "cre")))
+Description: Data sets, functions and vignettes for a three hour 
+  tutorial.
+URL: http://jumpingrivers.com
+License: GPL-2
+Depends:
+    R (>= 3.3)
+Imports:
+    Rcpp, profvis, microbenchmark
+Suggests: knitr, readr, rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1

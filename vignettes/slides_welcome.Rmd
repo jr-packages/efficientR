@@ -1,0 +1,106 @@
+---
+title: "Efficient R Programming"
+author: Colin Gillespie
+output: ioslides_presentation
+css: [css/left.css, css/welcome.css]
+---
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Slides: Welcome}
+-->
+
+## Who am I
+
+  * Dr Colin Gillespie
+    * Senior Statistics Lecturer, Newcastle University
+    * Consultant at [Jumping Rivers](jumpingerivers.com)
+
+## Jumping Rivers
+
+  * Statistical and R consultancy
+  * R, Scala, python, & Stan training
+  * Predictive analytics
+  * Dashboard development
+  * Questionnaires
+  
+# Who are you?
+
+## Who are you?
+
+  * Almost all Statisticians (1 data scientist)
+  * No problem writing functions and for loops
+    * Not so sure on C++
+  * Interested in:
+    * Common R pitfalls
+    * General tips and tricks
+    * Parallel computing
+    * Some C++ (but not all)
+
+
+## Todays workshop
+
+  * Small subset of efficient R programming course
+  * Based https://github.com/csgillespie/efficientR
+
+```{r eval=FALSE}
+## Slides
+browseVignettes("efficientRSS")
+```
+
+# Optimisation
+## Optimisation
+
+> The real problem is that programmers have spent far too much time worrying about efficiency in the wrong places and at the wrong times; premature optimization is the root of all evil (or at least most of it) in programming.
+
+__Donald Knuth__
+
+## Timing code
+
+  * `system.time()`
+  * `microbenchmark()`
+
+##  `system.time()`
+
+  * Easy to use
+
+```{r}
+system.time(x <- rnorm(1000000)^2.3)
+```
+
+##  `microbenchmark()`
+
+```{r eval=FALSE}
+microbenchmark::microbenchmark(times = 1000, unit = "ms", # milliseconds
+           d_m[1,], d_df[1,], d_m[,1], d_df[,1])
+#Unit: milliseconds
+#      expr      min       lq     mean  median       uq       max neval cld
+#  d_m[1, ] 0.004379 0.008598 0.014942 0.01497 0.020447   0.04940  1000  a 
+# d_df[1, ] 4.722343 5.067223 5.681703 5.33358 5.676791 109.38360  1000   b
+#  d_m[, 1] 0.006151 0.006771 0.007774 0.00720 0.008179   0.02445  1000  a 
+# d_df[, 1] 0.006499 0.008712 0.012811 0.01203 0.015382   0.05587  1000  a 
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
