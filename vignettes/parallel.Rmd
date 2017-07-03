@@ -25,7 +25,7 @@ The return value is the number of rolls required to finish the game.
 1. Now run in parallel using `parSapply()`. Time the different versions.
 
 ```{r echo=FALSE, eval=FALSE}
-library(parallel)
+library("parallel")
 cl  = makeCluster(2) 
 parSapply(cl, 1:4, snakes_ladders)
 stopCluster(cl)

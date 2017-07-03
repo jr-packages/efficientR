@@ -19,7 +19,8 @@ In Monopoly moving around the board is complicated by the fact that rolling a do
   * If you get a double, roll again (total3) and total_score = total1 + total2 + total3;
   * If roll three is a double, Go To Jail, otherwise move total_score.
 The following piece of code simulates rolling dice in a game of Monopoly. 
-```{r}
+```{r, echo = -1}
+current = 1
 ## current is a number between 1 and 40
 df = data.frame(d1 = sample(seq(1, 6), 3, replace = TRUE),
                 d2 = sample(seq(1, 6), 3, replace = TRUE))
