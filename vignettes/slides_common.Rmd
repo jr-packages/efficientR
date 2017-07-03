@@ -69,7 +69,7 @@ local(source("code/01-vector_growth.R", local=TRUE))
 
 Object growth can be quite insidious since it is easy to hide growing objects in your
 code. For example:
-```{r, echo=-2}
+```{r, echo=-1}
 n = 2
 hit = NULL
 for(i in 1:n) {

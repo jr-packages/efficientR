@@ -48,5 +48,5 @@ profvis({
 ## Vignette
 
 ```{r eval=FALSE}
-vignette("profiling", package = "efficientRSS")
+vignette("profiling", package = "efficientR")
 ```

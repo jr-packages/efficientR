@@ -8,7 +8,7 @@ output: rmarkdown::html_vignette
 %\VignetteIndexEntry{Exercises: Common issues}
 -->
 
-> [We run](www.jumpingrivers.com) courses on R, Stan, Scala, Shiny and 
+> [We run](https://www.jumpingrivers.com/dates) courses on R, Stan, Scala, Shiny and 
 > Python. We also provide in-house training. Get a 10% discount for courses booked
 > before Jan 1st 2017. Just mentioned "useR Efficient" in the booking notes^[The discount
 is valid with the standard academic rate; but can't be used with other discounts.].
@@ -48,18 +48,10 @@ type numeric, then:
     saveRDS(m, file = "example.RData")
     readRDS(file = "example.RData")
     ```
-1. Install the __readr__ package via
-    ```{r eval=FALSE}
-    install.packages("readr")
-    ```
-Then load the package in the usual way
-    ```{r}
-    library("readr")
-    ```
-This package contains the function `read_csv()`; a replacement function for `read.csv()`. 
-Is this new function much better than the default?
+1. Compare the speed of `read_csv()` from the **readr** package to `read.csv()`
 
-Which of the above give the biggest speed-ups? Are there any downsides to using these techniques? Do your results depend on the number of columns or the number of rows?
+Which of the above give the biggest speed-ups? Are there any downsides to using these
+techniques? Do your results depend on the number of columns or the number of rows?
 
 
 ## Exercise 2

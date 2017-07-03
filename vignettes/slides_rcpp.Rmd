@@ -48,7 +48,7 @@ install.packages("Rcpp")
 ```
 
 ```{r results="hide"}
-efficientR::test_rcpp()
+efficientTutorial::test_rcpp()
 ```
 
 # A simple C++ function
@@ -112,7 +112,7 @@ add_c(1, 2)
 ## Exercise 1
 
 ```{r eval=FALSE}
-vignette("rcpp", package="efficientR")
+vignette("rcpp", package="efficientTutorial")
 ```
 
 # C/C++ data types
@@ -180,7 +180,7 @@ To save space, we'll omit the headers for the remainder of the chapter.
 # Exercise 2
 ## Exercise 2
 ```{r eval=FALSE}
-vignette("rcpp", package="efficientR")
+vignette("rcpp", package="efficientTutorial")
 ```
 
 # Vectors and loops
@@ -257,7 +257,7 @@ grid()
 # Exercise 3
 ## Exercise 3
 ```{r eval=FALSE}
-vignette("rcpp", package="efficientRSS")
+vignette("rcpp", package="efficientTutorial")
 ```
 
 
