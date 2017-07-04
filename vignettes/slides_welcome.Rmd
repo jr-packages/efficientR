@@ -10,7 +10,7 @@ css: [css/left.css, css/welcome.css]
 -->
 
 ```{r echo=FALSE}
-completed = read.csv("typeform.csv")
+completed = read.csv("extdata/typeform.csv")
 ```
 
 ## Who am I
@@ -55,10 +55,6 @@ barplot(table(r_for), col="steelblue", main = "Loops")
 
   * Most people haven't used C/C++
 
-
-
-
-
 ## Todays tutorial
 
   * Small subset of efficient R programming course
@@ -77,7 +73,6 @@ browseVignettes("efficientTutorial")
  * Pipes
  * Big data
  * Statistics
-
 
 # Optimisation
 ## Optimisation
@@ -101,7 +96,7 @@ __Donald Knuth__
 system.time(x <- rnorm(1000000)^2.3)
 ```
 
-  * Hard to compare multiple 
+  * Hard to compare multiple benchmarks
 
 ##  `microbenchmark()`
 
@@ -117,9 +112,14 @@ microbenchmark::microbenchmark(times = 1000,
 # d_df[, 1] 0.00649 0.00871 0.01281 0.0120 0.01538   0.0558  1000  a 
 ```
 
+## useR! Resolution
+
+> Never ask on Stackoverflow which method is faster!
+
 ## Todays Plan
 
   * Byte Compiling
+  * Low hanging targets
   * Code Profiling
   * Parallel Computing
   * Rcpp

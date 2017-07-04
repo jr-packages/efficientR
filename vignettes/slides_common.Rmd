@@ -260,3 +260,8 @@ for(i in 1:length(parts))
     post[i] = jitter(parts[i], k)
 ```
 
+## Exercises
+
+```{r}
+browseVignettes("common", package="efficientTutorial")
+
