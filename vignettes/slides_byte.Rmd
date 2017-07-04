@@ -1,6 +1,6 @@
 ---
 title: "The byte compiler"
-author: Colin Gillespie
+author: Colin Gillespie ([\@csgillespie](https://twitter.com/csgillespie))
 output: ioslides_presentation
 css: css/left.css
 ---
@@ -23,6 +23,8 @@ knitr::opts_chunk$set(
  * The compiler package has been part of R since version 2.13.0 
     - It translates R functions into another language that can be interpreted by a very fast interpreter
  * Since R 2.14.0, all of the standard functions and packages in R will be pre-compiled into byte-code
+ * Since R 3.4.0 JIT compilation has been enabled
+ 
  
 ## Byte compiler: the mean() function
 
@@ -57,7 +59,9 @@ cmp_mean_r
 ```
 
 
-## Benchmarks
+# Since 3.4.0 this is done automatically!
+
+## Benchmarks (R < 3.4.0)
 
 ```{r, eval=FALSE}
 # Generate some data
@@ -77,46 +81,29 @@ microbenchmark::microbenchmark(times = 10, unit = "ms", # milliseconds
 local(source("code/02-byte_f1.R", local=TRUE))
 ```
   
-## Compiling code
+## Package authors
 
-There are a number of ways to complile code. 
+If you create a package, then you automatically compile the package on installation by adding
 
-  * Compile individual functions using `cmpfun()`
-  * Enable just-in-time (JIT) compilation
-    * At the top of your R code add
-    ```{r eval=FALSE}
-    compiler::enableJIT(N)
-    ```
-  where $N$ indices the level of optimisation ($0$ to $3$)
-  
-## Monte Carlo
-
-```{r}
-f = function(N){
-  hits = 0
-  for(i in 1:N)  {
-    u1 = runif(1); u2 = runif(1)
-    if(u1^2 > u2)
-      hits = hits + 1
-  }
-  return(hits/N)
-}
+```{r eval=FALSE}
+ByteCompile: true
 ```
-__Exercise__: Time `f(N)`. Now enable `compiler::enableJIT(3)`. Retime.
+to the DESCRIPTION file
 
-## Compiling code
+## Packages on CRAN
 
-  * If you create a package, then you automatically compile the package on installation by adding
+Most R packages installed using `install.packages()` are not compiled 
+```{r, eval=FALSE}
+byte = tools::CRAN_package_db()$ByteCompile
+sum(!is.na(byte))/length(byte)*100
+# [1] 3.291
+```
+    
 
-    ```{r eval=FALSE}
-    ByteCompile: true
-    ```
-  to the DESCRIPTION file
-  * Most R packages installed using `install.packages()` are not compiled 
-    * We can force packages to be compiled by starting R with the environment variable `R_COMPILE_PKGS`
-    * Add `R_COMPILE_PKGS=3` to `~/.Renviron`
+## You will be compiled!
 
-## Compiling packages
+  * We can force packages to be compiled by starting R with the environment variable `R_COMPILE_PKGS`
+  * Add `R_COMPILE_PKGS=3` to `~/.Renviron`
 
 ```{r eval=FALSE}
 ## Windows users need Rtools

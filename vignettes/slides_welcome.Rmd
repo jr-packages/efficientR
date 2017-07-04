@@ -1,6 +1,6 @@
 ---
 title: "Efficient R Programming"
-author: Colin Gillespie
+author: Colin Gillespie ([\@csgillespie](https://twitter.com/csgillespie))
 output: ioslides_presentation
 css: [css/left.css, css/welcome.css]
 ---
@@ -8,6 +8,10 @@ css: [css/left.css, css/welcome.css]
 %\VignetteEngine{knitr::rmarkdown}
 %\VignetteIndexEntry{Slides: Welcome}
 -->
+
+```{r echo=FALSE}
+completed = read.csv("typeform.csv")
+```
 
 ## Who am I
 
@@ -23,18 +27,36 @@ css: [css/left.css, css/welcome.css]
   * Dashboard development
   * In-house training
   
-# Who are you?
+# Who are you? Time to make a friend
 
 ## Who are you?
 
-  * Almost all Statisticians (1 data scientist)
-  * No problem writing functions and for loops
-    * Not so sure on C++
-  * Interested in:
-    * Common R pitfalls
-    * General tips and tricks
-    * Parallel computing
-    * Some C++ (but not all)
+```{r, echo=FALSE}
+setnicepar()
+tab = table(completed$list_iVD4_choice)
+barplot(tab, col="steelblue")
+```
+We also have a _Transitionning Physicist_ in the room
+
+## Functions & loops
+
+```{r echo=FALSE}
+setnicepar(mfrow=c(1, 2))
+r_fun = as.numeric(completed$opinionscale_nW40)
+barplot(table(r_fun), col="steelblue", main = "Functions")
+r_for = as.numeric(completed$opinionscale_LMTT)
+barplot(table(r_for), col="steelblue", main = "Loops")
+```
+
+
+## Other bits and pieces
+
+  * Around 40% of people have built a package
+
+  * Most people haven't used C/C++
+
+
+
 
 
 ## Todays tutorial
@@ -44,7 +66,7 @@ css: [css/left.css, css/welcome.css]
 
 ```{r eval=FALSE}
 ## Slides
-browseVignettes("efficientR")
+browseVignettes("efficientTutorial")
 ```
 
 ## What we won't cover
@@ -52,6 +74,9 @@ browseVignettes("efficientR")
  * Rcpp in depth
  * dplyr and friends
  * The joys of git and reproducible research
+ * Pipes
+ * Big data
+ * Statistics
 
 
 # Optimisation
@@ -76,20 +101,28 @@ __Donald Knuth__
 system.time(x <- rnorm(1000000)^2.3)
 ```
 
+  * Hard to compare multiple 
+
 ##  `microbenchmark()`
 
 ```{r eval=FALSE}
-microbenchmark::microbenchmark(times = 1000, unit = "ms", # milliseconds
+microbenchmark::microbenchmark(times = 1000, 
+                               unit = "ms", # milliseconds
            d_m[1,], d_df[1,], d_m[,1], d_df[,1])
 #Unit: milliseconds
-#      expr      min       lq     mean  median       uq       max neval cld
-#  d_m[1, ] 0.004379 0.008598 0.014942 0.01497 0.020447   0.04940  1000  a 
-# d_df[1, ] 4.722343 5.067223 5.681703 5.33358 5.676791 109.38360  1000   b
-#  d_m[, 1] 0.006151 0.006771 0.007774 0.00720 0.008179   0.02445  1000  a 
-# d_df[, 1] 0.006499 0.008712 0.012811 0.01203 0.015382   0.05587  1000  a 
+#      expr     min      lq    mean median      uq      max neval cld
+#  d_m[1, ] 0.00437 0.00859 0.01494 0.0149 0.02044   0.0494  1000  a 
+# d_df[1, ] 4.72234 5.06722 5.68170 5.3335 5.67679 109.3836  1000   b
+#  d_m[, 1] 0.00615 0.00677 0.00777 0.0072 0.00817   0.0244  1000  a 
+# d_df[, 1] 0.00649 0.00871 0.01281 0.0120 0.01538   0.0558  1000  a 
 ```
 
+## Todays Plan
 
+  * Byte Compiling
+  * Code Profiling
+  * Parallel Computing
+  * Rcpp
 
 
 

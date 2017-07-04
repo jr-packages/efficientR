@@ -1,6 +1,6 @@
 ---
 title: "Common pitfalls"
-author: Colin Gillespie
+author: Colin Gillespie ([\@csgillespie](https://twitter.com/csgillespie))
 date: "`r Sys.Date()`"
 output: ioslides_presentation
 css: css/left.css
