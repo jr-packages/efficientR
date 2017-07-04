@@ -264,4 +264,4 @@ for(i in 1:length(parts))
 
 ```{r}
 browseVignettes("common", package="efficientTutorial")
-
+```
