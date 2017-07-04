@@ -263,5 +263,5 @@ for(i in 1:length(parts))
 ## Exercises
 
 ```{r}
-browseVignettes("common", package="efficientTutorial")
+vignette("common", package="efficientTutorial")
 ```
