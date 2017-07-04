@@ -97,7 +97,7 @@ N = 1
 ## Example: Monte-Carlo simulation
 
   * To run in parallel is relatively straightforward. 
-  * We make a `cluster` objects and specify the numer of threads to generate
+  * We make a `cluster` objects and specify the number of threads to generate
     ```{r}
     cl = makeCluster(2)
     ```

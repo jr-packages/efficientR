@@ -77,7 +77,7 @@ double add_c(double x, double y) {
 
   * Typically we need a function `main`; not here. 
   * Rcpp makes it easy to call C++ functions from R
-  * Users doen't have to worry about
+  * Users doesn't have to worry about
     * platform;
     * compilers;
     * R/C interface.
