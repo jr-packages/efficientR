@@ -270,5 +270,5 @@ for(i in 1:length(parts))
 ## Exercises 1 & 2
 
 ```{r, eval=FALSE}
-vignette("common", package="efficientTutorial")
+vignette("common", package = "efficientTutorial")
 ```

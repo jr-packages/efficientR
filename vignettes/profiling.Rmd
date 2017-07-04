@@ -18,7 +18,9 @@ In Monopoly moving around the board is complicated by the fact that rolling a do
   * If you get a double, roll again (total2) and total_score = total1 + total2;
   * If you get a double, roll again (total3) and total_score = total1 + total2 + total3;
   * If roll three is a double, Go To Jail, otherwise move total_score.
-The following piece of code simulates rolling dice in a game of Monopoly. 
+
+The following piece of code simulates rolling two dice in a game of Monopoly. 
+
 ```{r, echo = -1}
 current = 1
 ## current is a number between 1 and 40
@@ -69,9 +71,9 @@ profvis::profvis({
 ```
 Parts to target:
 
-  * Using `seq` instead of `:` looks suspect
-  * A data frame has overheads, why not try a matrix
-  * Instead of `apply` what about `colSums`
-  * Use scaler `AND` - `&&` instead of `&`
+  * Using `seq()` instead of `:` looks suspect
+  * A data frame has overheads, why not try a matrix?
+  * Instead of `apply()` what about `colSums()`
+  * Use the scaler `AND` - `&&` instead of `&`
 
 

@@ -18,7 +18,6 @@ css: css/left.css
 ```{r echo=FALSE,  warning=FALSE, fig.width=6, fig.height=4, out.width="70%", fig.align="center"}
 local(source("code/08-hardware_cpu_speed.R", local=TRUE))
 ```
-  
 
 ## Parallel computing
 
