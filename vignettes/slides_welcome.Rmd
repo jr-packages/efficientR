@@ -102,6 +102,16 @@ browseVignettes("efficientTutorial")
  * Big data
  * Statistics
 
+## What we do cover
+
+  * Byte Compiling
+  * Low hanging targets
+  * Code Profiling
+  * Parallel Computing
+  * Rcpp
+
+> The goal is to give a flavour of the topics
+
 # Optimisation
 ## Optimisation
 
@@ -182,20 +192,8 @@ grid()
 
 > Never ask on Stackoverflow which method is faster!
 
-## Todays Plan
 
-  * Byte Compiling
-  * Low hanging targets
-  * Code Profiling
-  * Parallel Computing
-  * Rcpp
-
-
-
-
-
-
-
+# On to byte compiling
 
 
 

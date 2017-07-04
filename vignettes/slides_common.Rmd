@@ -269,6 +269,6 @@ for(i in 1:length(parts))
 
 ## Exercises 1 & 2
 
-```{r}
+```{r, eval=FALSE}
 vignette("common", package="efficientTutorial")
 ```

@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
   fig.pos="t"
 )
 ```
+
 # Byte compiler
 ## Byte compiler
 
@@ -24,8 +25,7 @@ knitr::opts_chunk$set(
     - It translates R functions into another language that can be interpreted by a very fast interpreter
  * Since R 2.14.0, all of the standard functions and packages in R will be pre-compiled into byte-code
  * Since R 3.4.0 JIT compilation has been enabled
- 
- 
+
 ## Byte compiler: the mean() function
 
 ```{r}
