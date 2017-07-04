@@ -31,6 +31,8 @@ local(source("code/08-hardware_cpu_speed.R", local=TRUE))
     detectCores()
     ```
     
+__Quick Exercise__: How many cores do you have?
+
 ## Can my application be parallelised?    
 
   * An easy rule of thumb to determine if your `for` loop can be parallelised is
@@ -108,3 +110,9 @@ N = 1
     ```{r}
     stopCluster(cl)
     ```
+
+## Exercise
+
+```{r eval=FALSE}
+vignette("parallel", package="efficientTutorial")
+```

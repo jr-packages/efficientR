@@ -8,7 +8,7 @@ output: rmarkdown::html_vignette
 %\VignetteIndexEntry{Exercises: Rcpp}
 -->
 
-> We also run on-site courses for companies and Universities.
+> [We also](https://www.jumpingrivers.com) run on-site courses for companies and Universities.
 
 
   

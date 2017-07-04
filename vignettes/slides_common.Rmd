@@ -100,6 +100,9 @@ iteration will have a different number of observations.
     * So pre-allocate!
 
 
+## Rule 1
+
+![](graphics/rule1.jpg)
 
 # Vectorise
 ## Vectorise
@@ -233,6 +236,10 @@ __Exercise__: Can you vectorise the above code?
 <!-- system.time(f1(N)) -->
 <!-- ``` -->
 
+##
+
+![](graphics/rule2.jpg)
+
 
 ## If you can't vectorise
 
@@ -260,7 +267,7 @@ for(i in 1:length(parts))
     post[i] = jitter(parts[i], k)
 ```
 
-## Exercises
+## Exercises 1 & 2
 
 ```{r}
 vignette("common", package="efficientTutorial")

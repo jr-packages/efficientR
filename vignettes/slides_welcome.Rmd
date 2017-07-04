@@ -29,6 +29,7 @@ drat::addRepo("jr-packages")
 install.packages("efficientTutorial")
 ```
 
+I'll add solutions after the course
 
 ## Who am I
 
@@ -43,6 +44,15 @@ install.packages("efficientTutorial")
   * Predictive analytics
   * Dashboard development
   * In-house training
+  
+## Sorry
+
+ * Unfortunately, my voice seems to be going
+ 
+ * So I've reduced the "talking time" and increased the hands on part
+ 
+ * Not ideal with a large audience
+  
   
 # Who are you? Time to make a friend
 
@@ -75,6 +85,7 @@ barplot(table(r_for), col="steelblue", main = "Loops", ylim=c(0, 40))
 ## Todays tutorial
 
   * Small subset of efficient R programming course
+  
   * Based https://github.com/csgillespie/efficientR
 
 ```{r eval=FALSE}
@@ -100,6 +111,7 @@ root of all evil (or at least most of it) in programming.
 
 __Donald Knuth__
 
+
 ## Timing code
 
   * `system.time()`
@@ -110,6 +122,9 @@ __Donald Knuth__
   * Easy to use
 
     ```{r}
+    ## <- vs = 
+    ## Using <- here creates an object `x`
+    ## Using = raises an errror
     system.time(x <- rnorm(1000000)^2.3)
     ```
 
@@ -117,17 +132,51 @@ __Donald Knuth__
 
 ##  `microbenchmark()`
 
+ * `microbenchmark()` makes it easy to compare multiple functions
+ * Example: matrix (`d_m`) vs data frame (`d_df`)
+  * Selecting Rows and columns
+
 ```{r eval=FALSE}
-microbenchmark::microbenchmark(times = 1000, 
-                               unit = "ms", # milliseconds
-           d_m[1,], d_df[1,], d_m[,1], d_df[,1])
+library("microbenchmark")
+(res = microbenchmark(times = 1000, 
+               unit = "ms", # milliseconds
+           d_m[1,], d_df[1,], d_m[,1], d_df[,1]))
 #Unit: milliseconds
-#      expr     min      lq    mean median      uq      max neval cld
-#  d_m[1, ] 0.00437 0.00859 0.01494 0.0149 0.02044   0.0494  1000  a 
-# d_df[1, ] 4.72234 5.06722 5.68170 5.3335 5.67679 109.3836  1000   b
-#  d_m[, 1] 0.00615 0.00677 0.00777 0.0072 0.00817   0.0244  1000  a 
-# d_df[, 1] 0.00649 0.00871 0.01281 0.0120 0.01538   0.0558  1000  a 
+#      expr   min    lq   mean  median      uq      max neval cld
+#  d_m[1, ] 0.004 0.008  0.014   0.014  0.0204    0.049  1000  a 
+# d_df[1, ] 4.722 5.067  5.681   5.333  5.6767  109.383  1000   b
+#  d_m[, 1] 0.006 0.006  0.007   0.007  0.0081    0.024  1000  a 
+# d_df[, 1] 0.006 0.008  0.012   0.012  0.0153   0.0558  1000  a 
 ```
+
+```{r eval=FALSE, echo=FALSE}
+d_m = matrix(1:10000, ncol=100)
+d_df = as.data.frame(d_m)
+colnames(d_df) = paste0("c", 1:ncol(d_df))
+res = microbenchmark::microbenchmark(times = 1000, 
+               unit = "ms", # milliseconds
+           d_m[1,], d_df[1,], d_m[,1], d_df[,1])
+saveRDS(res, "extdata/data_matrix.rds")
+```
+
+## Plotting method
+
+```{r eval=FALSE}
+plot(res, log="y")
+```
+```{r, echo=FALSE}
+res = readRDS("extdata/data_matrix.rds")
+setnicepar()
+plot(res, log="y", colour="steelblue")
+grid()
+```
+
+## data frame vs matrix
+
+ * All data in a matrix must be the same type
+ 
+ * Less overhead than a data frame, so faster
+
 
 ## useR! Resolution
 

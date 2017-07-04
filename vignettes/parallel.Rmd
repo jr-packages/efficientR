@@ -13,16 +13,37 @@ output: rmarkdown::html_vignette
 
 
 In the **efficientTutorial** package there is a function, `snake_ladders()`, that simulates a 
-game of snakes and ladders (for a single player):
+game of [snakes and ladders](https://en.wikipedia.org/wiki/Snakes_and_Ladders) (for a single player)^[This example
+is based on the real game after a particularly long and boring session with my 5 year old son]:
 ```{r}
 library("efficientTutorial")
 snakes_ladders()
 ```
-The return value is the number of rolls required to finish the game.
+The return value is the number of rolls required to finish the game. We can simulate multiple games via
 
-1. Write a for loop to simulate multiple games
+```{r eval = FALSE}
+n = 10
+results = numeric(n)
+for(i in 1:n) {
+  results[i] = snakes_ladders()
+}
+```
+1. Simulate `n = 10000` games and create a boxplot
+
 1. Rewrite the loop using `sapply()`
-1. Now run in parallel using `parSapply()`. Time the different versions.
+```{r, eval=FALSE}
+results = sapply(1:n, function(i) snakes_ladders())
+```
+Is `sapply()` faster than a for loop?
+
+1. Now run in parallel using `parSapply()`:
+  * Load the **parallel** package
+  * Create a cluster object using `cl = makeCluster(no_of_cores)`. To start set
+  `no_of_cores = 2`
+  * Rewrite `sapply()` as `parSapply()`. Remember that `parSapply` has an additional argument `cl`
+  * Stop the cluster using `stopCluster()`
+
+Time the different versions.
 
 ```{r echo=FALSE, eval=FALSE}
 library("parallel")

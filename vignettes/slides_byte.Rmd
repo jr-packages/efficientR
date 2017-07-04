@@ -59,9 +59,22 @@ cmp_mean_r
 ```
 
 
-## Since 3.4.0 this is done automatically!
+## Since 3.4.0 this is done automatically
 
-You need to be careful with timings!
+![](graphics/simply.jpg)
+
+
+## Timings: don't rely on `n=1`
+
+```{r, eval=FALSE}
+x = rnorm(1e7)
+system.time(y <- mean_r(x))
+#   user  system elapsed 
+#  1.692   0.040   0.583 
+system.time(y <- mean_r(x))
+#   user  system elapsed 
+#  0.572   0.000   0.575 
+```
 
 ## Benchmarks (R < 3.4.0)
 

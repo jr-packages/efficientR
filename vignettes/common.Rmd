@@ -9,15 +9,14 @@ output: rmarkdown::html_vignette
 -->
 
 > [We run](https://www.jumpingrivers.com/dates) courses on R, Stan, Scala, Shiny and 
-> Python. We also provide in-house training. Get a 10% discount for courses booked
-> before Jan 1st 2017. Just mentioned "useR Efficient" in the booking notes^[The discount
+> Python. Get a 10% discount on public courses booked before July 31st 2017. 
+> Just mentioned "useR Efficient" in the booking notes^[The discount
 is valid with the standard academic rate; but can't be used with other discounts.].
 
 ## Exercise 1
 
-In this example, we are going to investigate loading a
-large data frame. First, we'll generate a large matrix of random numbers and
-save it as a csv file:
+In this example, we are going to investigate loading a large data frame. First, we'll
+generate a large matrix of random numbers and save it as a csv file:
 
 ```{r practical1, echo=-2}
 N = 1e5
@@ -49,6 +48,8 @@ type numeric, then:
     readRDS(file = "example.RData")
     ```
 1. Compare the speed of `read_csv()` from the **readr** package to `read.csv()`
+
+1. How does `fread()` from the **data.table** package compare to the other solutions?
 
 Which of the above give the biggest speed-ups? Are there any downsides to using these
 techniques? Do your results depend on the number of columns or the number of rows?
