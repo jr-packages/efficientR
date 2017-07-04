@@ -20,6 +20,16 @@ setnicepar = function(mar=c(3,3,2,1),
 }
 ```
 
+## Tutorial R Package
+
+Contains copies of slides and exercises
+```{r eval=FALSE}
+install.packages("drat")
+drat::addRepo("jr-packages")
+install.packages("efficientTutorial")
+```
+
+
 ## Who am I
 
   * Dr Colin Gillespie
@@ -49,10 +59,10 @@ We also have a _Transitionning Physicist_ in the room
 
 ```{r echo=FALSE}
 setnicepar(mfrow=c(1, 2))
-r_fun = as.numeric(completed$opinionscale_nW40)
-barplot(table(r_fun), col="steelblue", main = "Functions")
-r_for = as.numeric(completed$opinionscale_LMTT)
-barplot(table(r_for), col="steelblue", main = "Loops")
+r_fun = factor(as.numeric(completed$opinionscale_nW40), levels=1:10)
+barplot(table(r_fun), col="steelblue", main = "Functions", ylim=c(0, 40))
+r_for = factor(as.numeric(completed$opinionscale_LMTT), levels=1:10)
+barplot(table(r_for), col="steelblue", main = "Loops", ylim=c(0, 40))
 ```
 
 
@@ -99,9 +109,9 @@ __Donald Knuth__
 
   * Easy to use
 
-```{r}
-system.time(x <- rnorm(1000000)^2.3)
-```
+    ```{r}
+    system.time(x <- rnorm(1000000)^2.3)
+    ```
 
   * Hard to compare multiple benchmarks
 

@@ -59,7 +59,9 @@ cmp_mean_r
 ```
 
 
-# Since 3.4.0 this is done automatically!
+## Since 3.4.0 this is done automatically!
+
+You need to be careful with timings!
 
 ## Benchmarks (R < 3.4.0)
 
