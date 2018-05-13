@@ -1,12 +1,12 @@
 Package: efficientTutorial
 Type: Package
 Title: Efficient R Programming
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(person("Colin", "Gillespie",
       email="csgillespie@gmail.com", role = c("aut", "cre")))
 Description: Data sets, functions and vignettes for a three hour 
   tutorial.
-URL: http://jumpingrivers.com
+URL: https://jumpingrivers.com
 License: GPL-2
 Depends:
     R (>= 3.3)

@@ -1,6 +1,7 @@
 ---
 title: "Efficient R Programming"
 author: Colin Gillespie ([\@csgillespie](https://twitter.com/csgillespie))
+date: "Jumping Rivers ([\\@jumping_uk](https://twitter.com/jumping_uk))"
 output: ioslides_presentation
 css: [css/left.css, css/welcome.css]
 ---
@@ -23,19 +24,24 @@ setnicepar = function(mar=c(3,3,2,1),
 ## Tutorial R Package
 
 Contains copies of slides and exercises
+
 ```{r eval=FALSE}
 install.packages("drat")
 drat::addRepo("jr-packages")
 install.packages("efficientTutorial")
 ```
-
-I'll add solutions after the course
+ 
+ * Repo at https://github.com/jr-packages/efficientTutorial
+ 
+ * Slides at https://github.com/jumpingrivers/t/2018-efficient-erum
 
 ## Who am I
 
   * Dr Colin Gillespie
+  
     * Senior Statistics Lecturer, Newcastle University
-    * Consultant at [Jumping Rivers](jumpingerivers.com)
+  
+    * Consultant at [Jumping Rivers](https://jumpingerivers.com)
 
 ## Jumping Rivers
 
@@ -44,15 +50,6 @@ I'll add solutions after the course
   * Predictive analytics
   * Dashboard development
   * In-house training
-  
-## Sorry
-
- * Unfortunately my voice seems to be going
- 
- * So I've reduced the "talking time" and increased the hands on part
- 
- * Not ideal with a large audience
-  
   
 # Who are you? Time to make a friend
 
@@ -104,8 +101,10 @@ browseVignettes("efficientTutorial")
 
 ## What we do cover
 
-  * Byte Compiling
+  * Byte Compiling (only for 5 minutes)
   * Low hanging targets
+  * Your startup file
+  * Learning
   * Code Profiling
   * Parallel Computing
   * Rcpp
@@ -188,10 +187,9 @@ grid()
  * Less overhead than a data frame, so faster
 
 
-## useR! Resolution
+## eRum Resolution
 
 > Never ask on Stackoverflow which method is faster!
-
 
 # On to byte compiling
 

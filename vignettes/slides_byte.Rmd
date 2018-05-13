@@ -1,6 +1,7 @@
 ---
 title: "The byte compiler"
 author: Colin Gillespie ([\@csgillespie](https://twitter.com/csgillespie))
+date: "Jumping Rivers ([\\@jumping_uk](https://twitter.com/jumping_uk))"
 output: ioslides_presentation
 css: css/left.css
 ---
@@ -22,9 +23,28 @@ knitr::opts_chunk$set(
 ## Byte compiler
 
  * The compiler package has been part of R since version 2.13.0 
+ 
     - It translates R functions into another language that can be interpreted by a very fast interpreter
+ 
  * Since R 2.14.0, all of the standard functions and packages in R will be pre-compiled into byte-code
+ 
  * Since R 3.4.0 JIT compilation has been enabled
+ 
+ * Since R 3.5.0 all packages are now byte compiled
+
+## Benchmarks
+
+```{r echo=FALSE,  warning=FALSE, fig.width=6, fig.height=4, out.width="70%", fig.align="center"}
+local(source("code/02-byte_f1.R", local=TRUE))
+```
+
+## More info in the vignettes
+
+```{r, eval = FALSE}
+vignette("slides_byte", package = "efficientTutorial")
+```
+
+Since it's now default behaviour, we'll move on
 
 ## Byte compiler: the mean() function
 

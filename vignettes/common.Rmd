@@ -8,11 +8,6 @@ output: rmarkdown::html_vignette
 %\VignetteIndexEntry{Exercises: Common issues}
 -->
 
-> [We run](https://www.jumpingrivers.com/dates) courses on R, Stan, Scala, Shiny and 
-> Python. Get a 10% discount on public courses booked before July 31st 2017. 
-> Just mentioned "useR Efficient" in the booking notes^[The discount
-is valid with the standard academic rate; but can't be used with other discounts.].
-
 ## Exercise 1
 
 In this example, we are going to investigate loading a large data frame. First, we'll

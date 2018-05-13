@@ -1,7 +1,7 @@
 ---
 title: "Parallel computing"
 author: Colin Gillespie ([\@csgillespie](https://twitter.com/csgillespie))
-date: "`r Sys.Date()`"
+date: "Jumping Rivers ([\\@jumping_uk](https://twitter.com/jumping_uk))"
 output: ioslides_presentation
 css: css/left.css
 ---

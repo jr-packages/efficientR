@@ -2,8 +2,7 @@
 [![Build Status](https://travis-ci.org/jr-packages/efficientTutorial.svg?branch=master)](https://travis-ci.org/jr-packages/efficientTutorial)
 
 This repository contains the slides and associated questions
-for the [useR!2017](https://www.user2017.brussels/uploads/gillespie_efficient_R_tutorial_170112_152605_1.html) 
-tutorial. All material is contained within an R package (very efficient).
+for the efficient R tutorial. All material is contained within an R package (very efficient).
 
 The material in this tutorial is based on the [Efficient R Programming](http://shop.oreilly.com/product/0636920047995.do) book
 and the [Jumping Rivers](https://www.jumpingrivers.com) one day course.
