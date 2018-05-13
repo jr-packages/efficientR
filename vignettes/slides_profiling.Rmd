@@ -1,6 +1,7 @@
 ---
 title: "Code Profiling"
 author: Colin Gillespie ([\@csgillespie](https://twitter.com/csgillespie))
+date: "Jumping Rivers ([\\@jumping_uk](https://twitter.com/jumping_uk))"
 output: ioslides_presentation
 css: css/left.css
 ---
@@ -14,15 +15,21 @@ css: css/left.css
 ## Code Profiling
 
   * Often you will have working code, but simply want it to run faster. 
+  
     * In some cases it’s obvious where the bottle neck lies. 
+    
     * Sometimes you will guess, relying on intuition. 
+    
     * Sometime you're wrong
     
 ## Rprof()
 
   * `Rprof()` is a built-in tool for profiling the execution of R expressions. 
+  
   * At regular time intervals, the profiler stops the R interpreter, records the current function call stack, and saves the information to a file. 
+  
     * Stochastic
+  
     * Each time we run a function R, the conditions have changed
 
 ## Rprof()
@@ -51,8 +58,11 @@ In Monopoly moving around the board is complicated by the fact that rolling a do
 (a pair of 1's, 2's, ..., 6's) is special:
 
   * Roll two dice (total1): total_score = total1;
+  
   * If you get a double, roll again (total2) and total_score = total1 + total2;
+  
   * If you get a double, roll again (total3) and total_score = total1 + total2 + total3;
+  
   * If roll three is a double, Go To Jail, otherwise move total_score.
 
 ## Code
@@ -80,10 +90,15 @@ if (df$IsDouble[1] & df$IsDouble[2] & df$IsDouble[3]) {
 ## Exercise: Monopoly
 
  * However the code is (relatively) slow when we simulate the game multiple times
+ 
  * Using `profvis()` can you pinpoint where this function is slow? 
+ 
     * But, it runs too quickly for `profvis()`, so
+    
       - wrap the function in a loop
+      
       - reduce the sampling interval, `interval = 0.005`
+      
  * How would you speed it up?
 
 ```{r eval=FALSE}

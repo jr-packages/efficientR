@@ -29,7 +29,7 @@ css: css/left.css
 
  * Regardless of your level, there are questions you can answer
  
-  * Even just edit someone elses badly worded question helps
+  * Even just edit a badly worded question helps
  
  * SO usually takes a few(?) minutes - so closure
  
