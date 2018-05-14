@@ -1,0 +1,61 @@
+---
+title: "Efficient Learning"
+author: "Colin Gillespie ([\\@csgillespie](https://twitter.com/csgillespie))"
+date: "Jumping Rivers ([\\@jumping_uk](https://twitter.com/jumping_uk))"
+output: ioslides_presentation
+css: css/left.css
+---
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Slides: Your Start-up file}
+-->
+
+# Learning Unknown Unknowns
+
+# My route...
+
+# Stackoverflow
+
+# Show of hands
+
+# Who's "borrowed" code from SO?
+
+# Who's asked a question?
+
+# Who's anwered a question?
+
+## Answering stackoverflow questions
+
+ * Regardless of your level, there are questions you can answer
+ 
+  * Even just edit a badly worded question helps
+ 
+ * SO usually takes a few(?) minutes - so closure
+ 
+# What happens if someone gives a better answer?
+
+## Who cares!
+
+  * Just edit your answer to say XXX is better
+
+## Aside
+
+  * Never use code you don't understand
+  
+  * Read about the [Nissian dev](https://www.theverge.com/tldr/2016/5/4/11593084/dont-get-busted-copying-code-from-stack-overflow)
+
+# Others ways
+
+## Use the source!
+
+ * Watching the GitHub R source code mirror will allow you to monitor small changes that occur
+ 
+    * https://github.com/wch/r-source/
+    
+  * Also, look at how base R functions are written, e.g. `NCOL`
+  
+## R-dev Mailing List
+
+ * Really useful to see how R is built and the compromises it has to make
+ 
+ * I recommend giving at least a 6 week observing period before asking/answering

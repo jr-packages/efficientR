@@ -1,0 +1,117 @@
+---
+title: "Parallel computing"
+author: Colin Gillespie ([\@csgillespie](https://twitter.com/csgillespie))
+date: "Jumping Rivers ([\\@jumping_uk](https://twitter.com/jumping_uk))"
+output: ioslides_presentation
+css: css/left.css
+---
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Slides: Parallel computing}
+-->
+
+# Parallel computing
+## Parallel computing
+
+  * Over the last few years, the speed of a single CPU core has remained static 
+  
+```{r echo=FALSE,  warning=FALSE, fig.width=6, fig.height=4, out.width="70%", fig.align="center"}
+local(source("code/08-hardware_cpu_speed.R", local=TRUE))
+```
+
+## Parallel computing
+
+  * The `parallel` package comes with base R
+    ```{r}
+    library("parallel")
+    ```
+  * To detect the number of cores on your machine, use
+    ```{r}
+    detectCores()
+    ```
+    
+__Quick Exercise__: How many cores do you have?
+
+## Can my application be parallelised?    
+
+  * An easy rule of thumb to determine if your `for` loop can be parallelised is
+to ask the question, can the loop be written in reverse and still give the same
+answer? 
+  * For example
+    ```{}
+    for i in N:2
+      a[i] = a[i-1] + b[i]
+    ```
+would result in a different `a` vector, or depending on how `a` has been
+defined, could crash your program. 
+
+## Can my application be parallelised?    
+
+  * However this loop
+    ```{}
+    for i in 1:N
+      a[i] = monteCarloSimulation()
+    ```
+results in identical results regardless of loop order
+
+  
+## The apply family
+
+The most common parallel applications to be parallelized are replacements of `lapply`, `sapply`, and  `apply`
+
+```{r eval=FALSE}
+parLapply(cl, x, FUN, ...)
+parApply(cl = NULL, X, MARGIN, FUN, ...)
+parSapply(cl = NULL, X, FUN, ..., 
+          simplify = TRUE, USE.NAMES = TRUE) 
+```
+
+```{r echo=FALSE}
+mc = function(i, ...) runif(1)
+N = 1
+```
+
+## Example: Monte-Carlo simulation
+
+  * Suppose `mc` is a Monte-Carlo simulation function. Then we would have something like
+    ```{r}
+    results = numeric(N)
+    for(i in 1:N)
+      results[i] = mc(i)
+    ```
+
+## Example: Monte-Carlo simulation
+
+  * Suppose `mc` is a Monte-Carlo simulation function. Then we would have something like
+    ```{r}
+    results = numeric(N)
+    for(i in 1:N)
+      results[i] = mc(i)
+    ```
+  * We could re-write this `for` loop as
+    ```{r}
+    results = sapply(1:N, mc)
+    ```
+  * Using `sapply` isn't faster than a standard `for` loop
+  
+## Example: Monte-Carlo simulation
+
+  * To run in parallel is relatively straightforward. 
+  * We make a `cluster` objects and specify the number of threads to generate
+    ```{r}
+    cl = makeCluster(2)
+    ```
+  * Then change `sapply` to `parSapply`
+    ```{r}
+    results = parSapply(cl, 1:N, mc)
+    ```
+  * and clean up
+    ```{r}
+    stopCluster(cl)
+    ```
+
+## Exercise
+
+```{r eval=FALSE}
+vignette("parallel", package="efficientTutorial")
+```

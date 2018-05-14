@@ -2,3 +2,4 @@
 ^\.Rproj\.user$
 vignettes/order.Rmd
 .travis.yml
+slides

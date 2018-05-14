@@ -1,0 +1,198 @@
+---
+title: "Efficient R Programming"
+author: Colin Gillespie ([\@csgillespie](https://twitter.com/csgillespie))
+date: "Jumping Rivers ([\\@jumping_uk](https://twitter.com/jumping_uk))"
+output: ioslides_presentation
+css: [css/left.css, css/welcome.css]
+---
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Slides: Welcome}
+-->
+
+```{r echo=FALSE}
+completed = read.csv("extdata/typeform.csv")
+setnicepar = function(mar=c(3,3,2,1), 
+                      mgp=c(2,0.4,0), tck=-.01,
+                      cex.axis=0.9, las=1, mfrow=c(1,1),...) {
+  par(mar=mar, 
+      mgp=mgp, tck=tck,
+      cex.axis=cex.axis, las=las,mfrow=mfrow,...)
+}
+```
+
+## Tutorial R Package
+
+Contains copies of slides and exercises
+
+```{r eval=FALSE}
+install.packages("drat")
+drat::addRepo("jr-packages")
+install.packages("efficientTutorial")
+```
+ 
+ * Repo at https://github.com/jr-packages/efficientTutorial
+ 
+  * Slides at https://jumpingrivers.com/t/2018-efficient-erum
+
+## Who am I
+
+  * Dr Colin Gillespie
+  
+    * Senior Statistics Lecturer, Newcastle University
+  
+    * Consultant at [Jumping Rivers](https://jumpingerivers.com)
+
+## Jumping Rivers
+
+  * Statistical and R consultancy
+  * R, Scala, python, & Stan training
+  * Predictive analytics
+  * Dashboard development
+  * In-house training
+  
+# Who are you? Time to make a friend
+
+## Who are you?
+
+```{r, echo=FALSE}
+setnicepar()
+tab = table(completed$list_iVD4_choice)
+barplot(tab, col="steelblue")
+```
+We also have a _Transitionning Physicist_ in the room
+
+## Functions & loops
+
+```{r echo=FALSE}
+setnicepar(mfrow=c(1, 2))
+r_fun = factor(as.numeric(completed$opinionscale_nW40), levels=1:10)
+barplot(table(r_fun), col="steelblue", main = "Functions", ylim=c(0, 40))
+r_for = factor(as.numeric(completed$opinionscale_LMTT), levels=1:10)
+barplot(table(r_for), col="steelblue", main = "Loops", ylim=c(0, 40))
+```
+
+
+## Other bits and pieces
+
+  * Around 40% of people have built a package
+
+  * Most people haven't used C/C++
+
+## Todays tutorial
+
+  * Small subset of efficient R programming course
+  
+  * Based https://github.com/csgillespie/efficientR
+
+```{r eval=FALSE}
+## Slides
+browseVignettes("efficientTutorial")
+```
+
+## What we won't cover
+
+ * Rcpp in depth
+ * dplyr and friends
+ * The joys of git and reproducible research
+ * Pipes
+ * Big data
+ * Statistics
+
+## What we do cover
+
+  * Byte Compiling (only for 5 minutes)
+  * Low hanging targets
+  * Your startup file
+  * Learning
+  * Code Profiling
+  * Parallel Computing
+  * Rcpp
+
+> The goal is to give a flavour of the topics
+
+# Optimisation
+## Optimisation
+
+> The real problem is that programmers have spent far too much time worrying about
+efficiency in the wrong places and at the wrong times; premature optimization is the
+root of all evil (or at least most of it) in programming.
+
+__Donald Knuth__
+
+
+## Timing code
+
+  * `system.time()`
+  * `microbenchmark()`
+
+##  `system.time()`
+
+  * Easy to use
+
+    ```{r}
+    ## <- vs = 
+    ## Using <- here creates an object `x`
+    ## Using = raises an errror
+    system.time(x <- rnorm(1000000)^2.3)
+    ```
+
+  * Hard to compare multiple benchmarks
+
+##  `microbenchmark()`
+
+ * `microbenchmark()` makes it easy to compare multiple functions
+ * Example: matrix (`d_m`) vs data frame (`d_df`)
+  * Selecting Rows and columns
+
+```{r eval=FALSE}
+library("microbenchmark")
+(res = microbenchmark(times = 1000, 
+               unit = "ms", # milliseconds
+           d_m[1,], d_df[1,], d_m[,1], d_df[,1]))
+#Unit: milliseconds
+#      expr   min    lq   mean  median      uq      max neval cld
+#  d_m[1, ] 0.004 0.008  0.014   0.014  0.0204    0.049  1000  a 
+# d_df[1, ] 4.722 5.067  5.681   5.333  5.6767  109.383  1000   b
+#  d_m[, 1] 0.006 0.006  0.007   0.007  0.0081    0.024  1000  a 
+# d_df[, 1] 0.006 0.008  0.012   0.012  0.0153   0.0558  1000  a 
+```
+
+```{r eval=FALSE, echo=FALSE}
+d_m = matrix(1:10000, ncol=100)
+d_df = as.data.frame(d_m)
+colnames(d_df) = paste0("c", 1:ncol(d_df))
+res = microbenchmark::microbenchmark(times = 1000, 
+               unit = "ms", # milliseconds
+           d_m[1,], d_df[1,], d_m[,1], d_df[,1])
+saveRDS(res, "extdata/data_matrix.rds")
+```
+
+## Plotting method
+
+```{r eval=FALSE}
+plot(res, log="y")
+```
+```{r, echo=FALSE}
+res = readRDS("extdata/data_matrix.rds")
+setnicepar()
+plot(res, log="y", colour="steelblue")
+grid()
+```
+
+## data frame vs matrix
+
+ * All data in a matrix must be the same type
+ 
+ * Less overhead than a data frame, so faster
+
+
+## eRum Resolution
+
+> Never ask on Stackoverflow which method is faster!
+
+# On to byte compiling
+
+
+
+

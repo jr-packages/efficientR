@@ -1,0 +1,151 @@
+---
+title: "The byte compiler"
+author: Colin Gillespie ([\@csgillespie](https://twitter.com/csgillespie))
+date: "Jumping Rivers ([\\@jumping_uk](https://twitter.com/jumping_uk))"
+output: ioslides_presentation
+css: css/left.css
+---
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Slides: The byte compiler}
+-->
+```{r echo=FALSE}
+knitr::opts_chunk$set(
+  comment = "#>",
+  collapse = TRUE,
+  cache = TRUE, 
+  fig.align="center",
+  fig.pos="t"
+)
+```
+
+# Byte compiler
+## Byte compiler
+
+ * The compiler package has been part of R since version 2.13.0 
+ 
+    - It translates R functions into another language that can be interpreted by a very fast interpreter
+ 
+ * Since R 2.14.0, all of the standard functions and packages in R will be pre-compiled into byte-code
+ 
+ * Since R 3.4.0 JIT compilation has been enabled
+ 
+ * Since R 3.5.0 all packages are now byte compiled
+
+## Benchmarks
+
+```{r echo=FALSE,  warning=FALSE, fig.width=6, fig.height=4, out.width="70%", fig.align="center"}
+local(source("code/02-byte_f1.R", local=TRUE))
+```
+
+## More info in the vignettes
+
+```{r, eval = FALSE}
+vignette("slides_byte", package = "efficientTutorial")
+```
+
+Since it's now default behaviour, we'll move on
+
+## Byte compiler: the mean() function
+
+```{r}
+getFunction("mean")
+```
+
+note the `bytecode` line
+
+## Byte compiler
+
+  * We can compile our own R functions and obtain byte code version that may run faster. 
+
+## Example: Bad mean
+
+```{r}
+mean_r = function(x) {
+  total = 0
+  n = length(x)
+  for(i in 1:n)
+    total = total + x[i]/n
+  total
+}
+```
+
+## Compiled version
+
+```{r}
+library("compiler")
+cmp_mean_r = cmpfun(mean_r)
+cmp_mean_r  
+```
+
+
+## Since 3.4.0 this is done automatically
+
+![](graphics/simply.jpg)
+
+
+## Timings: don't rely on `n=1`
+
+```{r, eval=FALSE}
+x = rnorm(1e7)
+system.time(y <- mean_r(x))
+#   user  system elapsed 
+#  1.692   0.040   0.583 
+system.time(y <- mean_r(x))
+#   user  system elapsed 
+#  0.572   0.000   0.575 
+```
+
+## Benchmarks (R < 3.4.0)
+
+```{r, eval=FALSE}
+# Generate some data
+x = rnorm(1000)
+microbenchmark::microbenchmark(times = 10, unit = "ms", # milliseconds
+          mean_r(x), cmp_mean_r(x), mean(x))
+#> Unit: milliseconds
+#>           expr   min    lq  mean median    uq  max neval cld
+#>      mean_r(x) 0.358 0.361 0.370  0.363 0.367 0.43    10   c
+#>  cmp_mean_r(x) 0.050 0.051 0.052  0.051 0.051 0.07    10  b 
+#>        mean(x) 0.005 0.005 0.008  0.007 0.008 0.03    10 a  
+```
+
+## Benchmarks
+
+```{r echo=FALSE,  warning=FALSE, fig.width=6, fig.height=4, out.width="70%", fig.align="center"}
+local(source("code/02-byte_f1.R", local=TRUE))
+```
+  
+## Package authors
+
+If you create a package, then you automatically compile the package on installation by adding
+
+```{r eval=FALSE}
+ByteCompile: true
+```
+to the DESCRIPTION file
+
+## Packages on CRAN
+
+Most R packages installed using `install.packages()` are not compiled 
+```{r, eval=FALSE}
+byte = tools::CRAN_package_db()$ByteCompile
+sum(!is.na(byte))/length(byte)*100
+# [1] 3.291
+```
+    
+
+## You will be compiled!
+
+  * We can force packages to be compiled by starting R with the environment variable `R_COMPILE_PKGS`
+  * Add `R_COMPILE_PKGS=3` to `~/.Renviron`
+
+```{r eval=FALSE}
+## Windows users need Rtools
+install.packages("ggplot2", 
+                 type = "source", 
+                 INSTALL_opts = "--byte-compile") 
+```
+
+
+
