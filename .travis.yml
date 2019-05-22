@@ -3,6 +3,8 @@ cache: packages
 
 notifications:
   email:
+  	recipients:
+  	  - alerts@jumpingrivers.support
     on_success: change
     on_failure: change
 
@@ -12,8 +14,9 @@ r_packages:
 before_install:
   - tlmgr install fancyvrb units
 
-#before_script:
-#  - make
+before_script:
+  - wget https://raw.githubusercontent.com/jr-packages/drat/master/test_deploy.sh
+  - bash test_deploy.sh
 
 after_success:
   - wget https://raw.githubusercontent.com/jr-packages/drat/master/deploy.sh
