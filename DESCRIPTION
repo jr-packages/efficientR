@@ -1,17 +1,27 @@
-Package: efficientTutorial
 Type: Package
+Package: efficientTutorial
 Title: Efficient R Programming
 Version: 0.1.2
-Authors@R: c(person("Colin", "Gillespie",
-      email="csgillespie@gmail.com", role = c("aut", "cre")))
-Description: Data sets, functions and vignettes for a three hour 
-  tutorial.
-URL: https://jumpingrivers.com
+Authors@R: 
+    person(given = "Colin",
+           family = "Gillespie",
+           role = c("aut", "cre"),
+           email = "csgillespie@gmail.com")
+Description: Data sets, functions and vignettes for a three hour
+    tutorial.
 License: GPL-2
+URL: https://jumpingrivers.com
 Depends:
     R (>= 3.3)
 Imports:
-    Rcpp, profvis, microbenchmark
-Suggests: knitr, readr, rmarkdown
-VignetteBuilder: knitr
+    microbenchmark,
+    profvis,
+    Rcpp
+Suggests: 
+    knitr,
+    readr,
+    rmarkdown
+VignetteBuilder: 
+    knitr
+Encoding: UTF-8
 RoxygenNote: 7.0.2
