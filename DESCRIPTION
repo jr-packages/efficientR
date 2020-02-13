@@ -14,4 +14,4 @@ Imports:
     Rcpp, profvis, microbenchmark
 Suggests: knitr, readr, rmarkdown
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 7.0.2

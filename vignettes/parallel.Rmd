@@ -24,7 +24,7 @@ The return value is the number of rolls required to finish the game. We can simu
 ```{r eval = FALSE}
 n = 10
 results = numeric(n)
-for(i in 1:n) {
+for (i in 1:n) {
   results[i] = snakes_ladders()
 }
 ```
