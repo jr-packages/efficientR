@@ -86,12 +86,12 @@ double add_c(double x, double y) {
 
 ```{r message=FALSE}
 library("Rcpp")
-cppFunction('
+cppFunction("
   double add_c(double x, double y){
     double value = x + y;
     return value;
   }
-')
+")
 ```
 
 Rcpp then performs magic!

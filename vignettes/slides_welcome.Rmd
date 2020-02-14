@@ -12,12 +12,12 @@ css: [css/left.css, css/welcome.css]
 
 ```{r echo=FALSE}
 completed = read.csv("extdata/typeform.csv")
-setnicepar = function(mar=c(3,3,2,1), 
-                      mgp=c(2,0.4,0), tck=-.01,
-                      cex.axis=0.9, las=1, mfrow=c(1,1),...) {
-  par(mar=mar, 
-      mgp=mgp, tck=tck,
-      cex.axis=cex.axis, las=las,mfrow=mfrow,...)
+setnicepar = function(mar=c(3, 3, 2, 1), 
+                      mgp=c(2, 0.4, 0), tck=-.01,
+                      cex.axis=0.9, las=1, mfrow=c(1, 1), ...) {
+  par(mar = mar, 
+      mgp = mgp, tck = tck,
+      cex.axis = cex.axis, las = las, mfrow = mfrow, ...)
 }
 ```
 
@@ -58,18 +58,18 @@ install.packages("efficientTutorial")
 ```{r, echo=FALSE}
 setnicepar()
 tab = table(completed$list_iVD4_choice)
-barplot(tab, col="steelblue")
+barplot(tab, col = "steelblue")
 ```
 We also have a _Transitionning Physicist_ in the room
 
 ## Functions & loops
 
 ```{r echo=FALSE}
-setnicepar(mfrow=c(1, 2))
-r_fun = factor(as.numeric(completed$opinionscale_nW40), levels=1:10)
-barplot(table(r_fun), col="steelblue", main = "Functions", ylim=c(0, 40))
-r_for = factor(as.numeric(completed$opinionscale_LMTT), levels=1:10)
-barplot(table(r_for), col="steelblue", main = "Loops", ylim=c(0, 40))
+setnicepar(mfrow = c(1, 2))
+r_fun = factor(as.numeric(completed$opinionscale_nW40), levels = 1:10)
+barplot(table(r_fun), col = "steelblue", main = "Functions", ylim = c(0, 40))
+r_for = factor(as.numeric(completed$opinionscale_LMTT), levels = 1:10)
+barplot(table(r_for), col = "steelblue", main = "Loops", ylim = c(0, 40))
 ```
 
 
@@ -149,7 +149,7 @@ __Donald Knuth__
 library("microbenchmark")
 (res = microbenchmark(times = 1000, 
                unit = "ms", # milliseconds
-           d_m[1,], d_df[1,], d_m[,1], d_df[,1]))
+           d_m[1, ], d_df[1, ], d_m[, 1], d_df[, 1]))
 #Unit: milliseconds
 #      expr   min    lq   mean  median      uq      max neval cld
 #  d_m[1, ] 0.004 0.008  0.014   0.014  0.0204    0.049  1000  a 
@@ -159,24 +159,24 @@ library("microbenchmark")
 ```
 
 ```{r eval=FALSE, echo=FALSE}
-d_m = matrix(1:10000, ncol=100)
+d_m = matrix(1:10000, ncol = 100)
 d_df = as.data.frame(d_m)
-colnames(d_df) = paste0("c", 1:ncol(d_df))
+colnames(d_df) = paste0("c", seq_along(d_df))
 res = microbenchmark::microbenchmark(times = 1000, 
                unit = "ms", # milliseconds
-           d_m[1,], d_df[1,], d_m[,1], d_df[,1])
+           d_m[1, ], d_df[1, ], d_m[, 1], d_df[, 1])
 saveRDS(res, "extdata/data_matrix.rds")
 ```
 
 ## Plotting method
 
 ```{r eval=FALSE}
-plot(res, log="y")
+plot(res, log = "y")
 ```
 ```{r, echo=FALSE}
 res = readRDS("extdata/data_matrix.rds")
 setnicepar()
-plot(res, log="y", colour="steelblue")
+plot(res, log = "y", colour = "steelblue")
 grid()
 ```
 

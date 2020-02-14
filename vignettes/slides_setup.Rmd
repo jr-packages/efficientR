@@ -75,7 +75,7 @@ to see if you have an `.Rprofile`
   - In my `.Rprofile` file, I have the line
 
 ```{r, eval=FALSE}
-options(prompt="R> ", # Exciting new R> prompt
+options(prompt = "R> ", # Exciting new R> prompt
         digits = 4, # No. of digits displayed
         show.signif.stars = FALSE, # I hate stars
         fix_width = 88, # Useful under Linux
@@ -102,10 +102,10 @@ rm(r)
   
 
 ```{r, eval=TRUE}
-setnicepar = function(mar=c(3,3,2,1), mgp=c(2,0.4,0), 
-    tck=-.01, cex.axis=0.9, las=1, mfrow=c(1,1), ...) {
-     par(mar=mar, mgp=mgp, tck=tck,
-       cex.axis=cex.axis, las=las, mfrow=mfrow, ...)
+setnicepar = function(mar = c(3, 3, 2, 1), mgp = c(2, 0.4, 0), 
+    tck = -.01, cex.axis = 0.9, las = 1, mfrow = c(1, 1), ...) {
+     par(mar = mar, mgp = mgp, tck = tck,
+       cex.axis = cex.axis, las = las, mfrow = mfrow, ...)
      }
 ```   
 
@@ -141,7 +141,7 @@ we create a *hidden* environment
 Then add our functions to the environment
 
 ```{r, }
-.env$ht = function(d, n=6) rbind(head(d, n), tail(d,n))
+.env$ht = function(d, n=6) rbind(head(d, n), tail(d, n))
 ```
 
  At the end of the `.Rprofile` file, we use the

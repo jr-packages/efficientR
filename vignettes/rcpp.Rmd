@@ -26,12 +26,12 @@ your background.
     ```
 and run the following code
     ```{r eval=FALSE}
-    cppFunction('
-      double add_c(double x, double y){
+    cppFunction("
+      double add_c(double x, double y) {
         double value = x + y;
         return value;
       }
-    ')
+    ")
 ```
 1. Call the function `add_c` and make sure it works. What happens if you pass it a vector
 or a character to the function?
@@ -58,10 +58,10 @@ my_var = function(x) {
   n = length(x)
   m = my_mean(x)
   total = 0
-  for(i in 1:n) {
+  for (i in 1:n) {
     total = total + (x[i] - m)^2
   }
-  total/(n-1)
+  total / (n - 1)
 }
 ```
 

@@ -16,7 +16,7 @@ css: css/left.css
   * Over the last few years, the speed of a single CPU core has remained static 
   
 ```{r echo=FALSE,  warning=FALSE, fig.width=6, fig.height=4, out.width="70%", fig.align="center"}
-local(source("code/08-hardware_cpu_speed.R", local=TRUE))
+local(source("code/08-hardware_cpu_speed.R", local = TRUE))
 ```
 
 ## Parallel computing
@@ -76,7 +76,7 @@ N = 1
   * Suppose `mc` is a Monte-Carlo simulation function. Then we would have something like
     ```{r}
     results = numeric(N)
-    for(i in 1:N)
+    for (i in 1:N)
       results[i] = mc(i)
     ```
 
@@ -85,7 +85,7 @@ N = 1
   * Suppose `mc` is a Monte-Carlo simulation function. Then we would have something like
     ```{r}
     results = numeric(N)
-    for(i in 1:N)
+    for (i in 1:N)
       results[i] = mc(i)
     ```
   * We could re-write this `for` loop as
@@ -113,5 +113,5 @@ N = 1
 ## Exercise
 
 ```{r eval=FALSE}
-vignette("parallel", package="efficientTutorial")
+vignette("parallel", package = "efficientTutorial")
 ```
