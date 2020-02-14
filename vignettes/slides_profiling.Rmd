@@ -44,7 +44,7 @@ css: css/left.css
 library("profvis")
 profvis({
   data(movies, package = "ggplot2movies") # Load data
-  movies = movies[movies$Comedy == 1,]
+  movies = movies[movies$Comedy == 1, ]
   plot(movies$year, movies$rating)
   model = loess(rating ~ year, data = movies) # loess regression line
   j = order(movies$year)

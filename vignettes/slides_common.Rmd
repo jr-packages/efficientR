@@ -27,7 +27,7 @@ __Method 1__ creates an empty vector, and grows the object:
 ```{r eval=FALSE, echo=TRUE, tidy=FALSE}
 n = 100000
 myvec = NULL; myvec = c()
-for(i in 1:n)
+for (i in 1:n)
     myvec = c(myvec, i)
 ```
 
@@ -38,7 +38,7 @@ values in the object by subscripting:
 
 ```{r eval=FALSE, echo=TRUE, tidy=FALSE}
 myvec = numeric(n)
-for(i in 1:n)
+for (i in 1:n)
     myvec[i] = i
 ```
 
@@ -62,7 +62,7 @@ $10^7$ | 3827.0 |   2.212    | 0.000
 ## Object growth: timings
 
 ```{r echo=FALSE,  warning=FALSE, fig.width=6, fig.height=4, out.width="70%", fig.align="center"}
-local(source("code/01-vector_growth.R", local=TRUE))
+local(source("code/01-vector_growth.R", local = TRUE))
 ```
 
 ## Object growth
@@ -72,8 +72,8 @@ code. For example:
 ```{r, echo=-1}
 n = 2
 hit = NULL
-for(i in 1:n) {
-    if(runif(1) < 0.3) 
+for (i in 1:n) {
+    if (runif(1) < 0.3) 
         hit[i]  = TRUE
     else
         hit[i]  = FALSE
@@ -89,7 +89,7 @@ __Exercise__ Rewrite the above code to avoid object growth
 A more common - and possibly more dangerous - problem is with `rbind`:
 ```{r eval=FALSE, echo=TRUE, tidy=FALSE}
 df1 = data.frame(a = character(0), b = numeric(0))
-for(i in 1:n)
+for (i in 1:n)
     df1 = rbind(df1, 
             data.frame(a = sample(letters, 1), b = runif(1)))
 ```
@@ -112,7 +112,7 @@ When writing code in R, you need to remember that you are using R and not C (or 
 ```{r eval=FALSE, echo=TRUE, tidy=FALSE}
 x = runif(1000) + 1
 logsum = 0
-for(i in 1:length(x))
+for (i in seq_along(x))
     logsum = logsum + log(x[i])
 ```
 This is a piece R code that has a strong, unhealthy influence from C.
@@ -139,8 +139,8 @@ Another common example is subsetting a vector. When writing in C, we would have 
 ```{r tidy=FALSE}
 x = rnorm(10)
 ans = NULL
-for(i in 1:length(x)) {
-    if(x[i] < 0) 
+for (i in seq_along(x)) {
+    if (x[i] < 0) 
         ans = c(ans, x[i])
 }
 ```
@@ -168,7 +168,7 @@ using a basic Monte-Carlo method.
 ## Example: Monte-Carlo integration
 
 ```{r echo=FALSE,  warning=FALSE, fig.width=6, fig.height=4, out.width="70%", fig.align="center"}
-local(source("code/01-monte_carlo.R", local=TRUE))
+local(source("code/01-monte_carlo.R", local = TRUE))
 ```
 
 
@@ -188,14 +188,14 @@ local(source("code/01-monte_carlo.R", local=TRUE))
 
 ```{r tidy=FALSE}
 N = 500000
-f = function(N){
+f = function(N) {
     hits = 0
-    for(i in 1:N)  {
+    for (i in 1:N)  {
         u1 = runif(1); u2 = runif(1)
-        if(u1^2 > u2)
+        if (u1^2 > u2)
             hits = hits + 1
     }
-    return(hits/N)
+    return(hits / N)
 }
 ``` 
 
@@ -210,14 +210,14 @@ system.time(f(N))
 
 ```{r tidy=FALSE}
 N = 500000
-f = function(N){
+f = function(N) {
     hits = 0
-    for(i in 1:N)  {
+    for (i in 1:N)  {
         u1 = runif(1); u2 = runif(1)
-        if(u1^2 > u2)
+        if (u1^2 > u2)
             hits = hits + 1
     }
-    return(hits/N)
+    return(hits / N)
 }
 ``` 
 
@@ -252,8 +252,8 @@ post = numeric(length(parts))
 ```
 
 ```{r cache=TRUE, tidy=FALSE}
-for(i in 1:length(parts)){
-    k = 1.06*sd(parts)/length(parts)
+for (i in seq_along(parts)) {
+    k = 1.06 * sd(parts) / length(parts)
     post[i] = jitter(parts[i], k)
 }
 ```
@@ -262,8 +262,8 @@ for(i in 1:length(parts)){
 
 Can be rewritten as
 ```{r cache=TRUE, tidy=FALSE}
-k = 1.06*sd(parts)/length(parts)
-for(i in 1:length(parts))
+k = 1.06 * sd(parts) / length(parts)
+for (i in seq_along(parts))
     post[i] = jitter(parts[i], k)
 ```
 

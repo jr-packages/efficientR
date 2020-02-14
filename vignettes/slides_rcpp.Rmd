@@ -14,8 +14,8 @@ knitr::opts_chunk$set(
   comment = "#>",
   collapse = TRUE,
   cache = TRUE, 
-  fig.align="center",
-  fig.pos="t"
+  fig.align = "center",
+  fig.pos = "t"
 )
 ```
 # Introduction
@@ -37,7 +37,7 @@ knitr::opts_chunk$set(
 ## Rcpp
 
 ```{r 7-5, echo=FALSE, fig.cap="Downloads per day from the RStudio CRAN mirror of packages that provide R interfaces to other languages.", warning=FALSE, fig.width=6, fig.height=4, out.width="70%", fig.align="center"}
-local(source("code/07-performance_f5.R", local=TRUE))
+local(source("code/07-performance_f5.R", local = TRUE))
 ```
 
 
@@ -86,12 +86,12 @@ double add_c(double x, double y) {
 
 ```{r message=FALSE}
 library("Rcpp")
-cppFunction('
-  double add_c(double x, double y){
+cppFunction("
+  double add_c(double x, double y) {
     double value = x + y;
     return value;
   }
-')
+")
 ```
 
 Rcpp then performs magic!
@@ -112,7 +112,7 @@ add_c(1, 2)
 ## Exercise 1
 
 ```{r eval=FALSE}
-vignette("rcpp", package="efficientTutorial")
+vignette("rcpp", package = "efficientTutorial")
 ```
 
 # C/C++ data types
@@ -180,7 +180,7 @@ To save space, we'll omit the headers for the remainder of the chapter.
 # Exercise 2
 ## Exercise 2
 ```{r eval=FALSE}
-vignette("rcpp", package="efficientTutorial")
+vignette("rcpp", package = "efficientTutorial")
 ```
 
 # Vectors and loops
@@ -190,8 +190,8 @@ vignette("rcpp", package="efficientTutorial")
 mean_r = function(x) {
   n = length(x)
   m = 0
-  for(i in seq_along(x))
-    m = m + x[i]/n
+  for (i in seq_along(x))
+    m = m + x[i] / n
   m
 }
 ```
@@ -212,7 +212,7 @@ double mean_c(NumericVector x){
 sourceCpp("../src/mean_c.cpp")
 ```
 ```{r echo=FALSE} 
-cppFunction('double mean_c(NumericVector x){
+cppFunction("double mean_c(NumericVector x) {
   int i;
   int n = x.size();
   double mean = 0;
@@ -221,7 +221,7 @@ cppFunction('double mean_c(NumericVector x){
     mean = mean + x[i]/n;
   }
   return mean;
-}')
+}")
 ```
 
 ## Speed comparison
@@ -249,15 +249,16 @@ z = microbenchmark(
 ## Results
 
 ```{r echo=FALSE}
-par(mar=c(3,3,2,1), mgp=c(2,0.4,0), tck=-.01, cex.axis=0.9, las=1)
-boxplot(z, ylab="Time", col="steelblue")
+par(mar = c(3, 3, 2, 1), mgp = c(2, 0.4, 0), tck = -.01,
+    cex.axis = 0.9, las = 1)
+boxplot(z, ylab = "Time", col = "steelblue")
 grid()
 ```
 
 # Exercise 3
 ## Exercise 3
 ```{r eval=FALSE}
-vignette("rcpp", package="efficientTutorial")
+vignette("rcpp", package = "efficientTutorial")
 ```
 
 
